@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, request, redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 from models import Passenger
-from ../modulo import app,db
+from ...modulo import app,db
 
 @app.route("/", methods=["POST", "GET"])
 def home():
@@ -13,16 +13,11 @@ def home():
     return render_template("index.html",User = users)
 
 @app.route('/new', methods=["POST", "GET"])
-def new_user():
+def new_passenger():
     if request.method == "POST":
         try:
-            name = request.form.get("name")
-            email= request.form.get("email")
-            address = request.form.get("address")
-            phone = request.form.get("phone")
-            user = User(name=name, email=email, address=address,phone=phone)
-            db.session.add(self)
-            db.session.commit()
+            passenger = Passenger()
+            passenger.addPassenger(request.form)
         except Exception as e:
             flash("There was a failure adding the user try again")
             print("Fallo al añadir usuario")
@@ -30,7 +25,7 @@ def new_user():
     return redirect(url_for('home'))
 
 @app.route("/update/<int:pk>", methods=['POST','GET'])
-def update_user(pk):
+def update_passenger(pk):
     if request.method == "POST":
         try:
             user = User.query.filter_by(_id=pk).first()
