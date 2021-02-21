@@ -1,45 +1,45 @@
 from flask import Flask, render_template, flash, request, redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
-from models import Passenger
+from models import Permission
 from ...modulo import app,db
 
 @app.route("/", methods=["POST", "GET"])
 def home():
     users_per_page = 5
-    all_data = User.query.all()
-    total_user = len(User.query.all())
+    all_data = Permission.query.all()
+    total_user = len(Permission.query.all())
     page = request.args.get('page',1, type =int)
-    users = User.query.paginate(page=page, per_page = users_per_page)
-    return render_template("index.html",User = users)
+    users = Permission.query.paginate(page=page, per_page = users_per_page)
+    return render_template("index.html",Permission = users)
 
 @app.route('/new', methods=["POST", "GET"])
-def new_passenger():
+def new_Permission():
     if request.method == "POST":
         try:
-            passenger = Passenger().addPassenger(request.form)
+            Permission = Permission().addPermission(request.form)
         except Exception as e:
-            flash("There was a failure adding the user try again")
+            flash("There was a failure adding the Permission try again")
             print("Fallo al añadir usuario")
             print(e)
     return redirect(url_for('home'))
 
 @app.route("/update/<int:pk>", methods=['POST','GET'])
-def update_passenger(pk):
+def update_Permission(pk):
     if request.method == "POST":
         try:
-            passenger = Passenger().editPassenger(pk)
+            Permission = Permission().editPermission(pk)
         except Exception as e:
-            flash("There was a failure to update the user try again")
-            print("Fallo al actualizar el user")
+            flash("There was a failure to update the Permission try again")
+            print("Fallo al actualizar el Permission")
             print(e)
     return redirect(url_for("home"))
 
 @app.route("/delete/<int:pk>")
-def delete_passenger(pk):
-    passenger = Passenger().deletePassenger(pk)
+def delete_Permission(pk):
+    Permission = Permission().deletePermission(pk)
     return redirect(url_for('home'))
 
 @app.route("/search/<int:pk>")
-def search_passenger(pk):
-    passenger = Passenger().searchPasseger(pk)
-    return render_template('info_passenger.html'), passenger=passenger)
+def search_Permission(pk):
+    Permission = Permission().searchPermission(pk)
+    return render_template('info_Permission.html'), Permission=Permission)
