@@ -1,6 +1,6 @@
 from flask import Flask, render_template, flash, request, redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
-from models import Passenger
+from models import Employee
 from ...modulo import app,db
 
 @app.route("/", methods=["POST", "GET"])
@@ -13,10 +13,10 @@ def home():
     return render_template("index.html",User = users)
 
 @app.route('/new', methods=["POST", "GET"])
-def new_passenger():
+def new_employee():
     if request.method == "POST":
         try:
-            passenger = Passenger().addPassenger(request.form)
+            employee = Employee().addEmployee(request.form)
         except Exception as e:
             flash("There was a failure adding the user try again")
             print("Fallo al añadir usuario")
@@ -24,10 +24,10 @@ def new_passenger():
     return redirect(url_for('home'))
 
 @app.route("/update/<int:pk>", methods=['POST','GET'])
-def update_passenger(pk):
+def update_employee(pk):
     if request.method == "POST":
         try:
-            passenger = Passenger().editPassenger(pk)
+            employee = Employee().editEmployee(pk)
         except Exception as e:
             flash("There was a failure to update the user try again")
             print("Fallo al actualizar el user")
@@ -35,11 +35,11 @@ def update_passenger(pk):
     return redirect(url_for("home"))
 
 @app.route("/delete/<int:pk>")
-def delete_passenger(pk):
-    passenger = Passenger().deletePassenger(pk)
+def delete_employee(pk):
+    employee = Employee().deleteEmployee(pk)
     return redirect(url_for('home'))
 
 @app.route("/search/<int:pk>")
-def search_passenger(pk):
-    passenger = Passenger().searchPasseger(pk)
-    return render_template('info_passenger.html'), passenger=passenger)
+def search_employee(pk):
+    employee = Employee().searchEmployee(pk)
+    return render_template('info_employee.html'), employee=employee)
