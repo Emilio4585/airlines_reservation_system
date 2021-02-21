@@ -32,7 +32,9 @@ class Passenger(db.Model):
         db.session.commit()
 
     def deletePassenger(self):#delete
-        pass
+        db.session.delete(self)
+        db.session.commit()
+        
     def searchPasseger(self):#read
         pass
     

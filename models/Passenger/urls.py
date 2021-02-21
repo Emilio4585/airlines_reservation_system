@@ -16,8 +16,7 @@ def home():
 def new_passenger():
     if request.method == "POST":
         try:
-            passenger = Passenger()
-            passenger.addPassenger(request.form)
+            passenger = Passenger().addPassenger(request.form)
         except Exception as e:
             flash("There was a failure adding the user try again")
             print("Fallo al añadir usuario")
@@ -28,13 +27,7 @@ def new_passenger():
 def update_passenger(pk):
     if request.method == "POST":
         try:
-            user = User.query.filter_by(_id=pk).first()
-            user.name = request.form.get("name")
-            user.email = request.form.get("email")
-            user.address = request.form.get("address")
-            user.phone = request.form.get("phone")
-            db.session.commit()
-            
+            passenger = Passenger().editPassenger(pk)
         except Exception as e:
             flash("There was a failure to update the user try again")
             print("Fallo al actualizar el user")
@@ -42,8 +35,11 @@ def update_passenger(pk):
     return redirect(url_for("home"))
 
 @app.route("/delete/<int:pk>")
-def delete_user(pk):
-    user = User.query.filter_by(_id=pk).first()
-    db.session.delete(user)
-    db.session.commit()
+def delete_passenger(pk):
+    passenger = Passenger().deletePassenger(pk)
+    return redirect(url_for('home'))
+
+@app.route("/delete/<int:pk>")
+def delete_passenger(pk):
+    passenger = Passenger().deletePassenger(pk)
     return redirect(url_for('home'))
