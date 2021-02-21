@@ -16,8 +16,7 @@ def home():
 def new_passenger():
     if request.method == "POST":
         try:
-            passenger = Passenger()
-            passenger.addPassenger(request.form)
+            passenger = Passenger().addPassenger(request.form)
         except Exception as e:
             flash("There was a failure adding the user try again")
             print("Fallo al añadir usuario")
