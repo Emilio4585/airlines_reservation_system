@@ -39,7 +39,7 @@ def delete_passenger(pk):
     passenger = Passenger().deletePassenger(pk)
     return redirect(url_for('home'))
 
-@app.route("/delete/<int:pk>")
-def delete_passenger(pk):
-    passenger = Passenger().deletePassenger(pk)
-    return redirect(url_for('home'))
+@app.route("/search/<int:pk>")
+def search_passenger(pk):
+    passenger = Passenger().searchPasseger(pk)
+    return render_template('info_passenger.html'), passenger=passenger)
