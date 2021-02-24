@@ -34,3 +34,9 @@ class Role(db.Model):
         self.role_title = ed.get("role_name", "None")
         self.role_description = ed.get("role_description", "None")
         db.session.commit()
+<<<<<<< HEAD
+=======
+
+    def __repr__(self):
+        return "<Name: {}>".format(self.passenger_name)
+>>>>>>> main
